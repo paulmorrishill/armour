@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmControl", "ArmControl\ArmControl.csproj", "{34CFDBA6-1CB2-4309-8AF1-94270286D83F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmControlTests", "ArmControlTests\ArmControlTests.csproj", "{861031C0-8CC6-40F4-8887-8BE5DAAA1169}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepetierArmController", "RepetierArmController\RepetierArmController.csproj", "{6D6EF727-03B4-4B3C-89D9-885E3B4833C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepetierArmControllerTests", "RepetierArmControllerTests\RepetierArmControllerTests.csproj", "{FBDB142D-464B-44F1-A3FA-5A47F0925396}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleArmControl", "ConsoleArmControl\ConsoleArmControl.csproj", "{26E3A63D-2F79-4E13-9835-DE6458E7CB91}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{34CFDBA6-1CB2-4309-8AF1-94270286D83F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34CFDBA6-1CB2-4309-8AF1-94270286D83F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34CFDBA6-1CB2-4309-8AF1-94270286D83F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34CFDBA6-1CB2-4309-8AF1-94270286D83F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{861031C0-8CC6-40F4-8887-8BE5DAAA1169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{861031C0-8CC6-40F4-8887-8BE5DAAA1169}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{861031C0-8CC6-40F4-8887-8BE5DAAA1169}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{861031C0-8CC6-40F4-8887-8BE5DAAA1169}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D6EF727-03B4-4B3C-89D9-885E3B4833C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D6EF727-03B4-4B3C-89D9-885E3B4833C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D6EF727-03B4-4B3C-89D9-885E3B4833C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D6EF727-03B4-4B3C-89D9-885E3B4833C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBDB142D-464B-44F1-A3FA-5A47F0925396}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBDB142D-464B-44F1-A3FA-5A47F0925396}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBDB142D-464B-44F1-A3FA-5A47F0925396}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBDB142D-464B-44F1-A3FA-5A47F0925396}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26E3A63D-2F79-4E13-9835-DE6458E7CB91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26E3A63D-2F79-4E13-9835-DE6458E7CB91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26E3A63D-2F79-4E13-9835-DE6458E7CB91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26E3A63D-2F79-4E13-9835-DE6458E7CB91}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
