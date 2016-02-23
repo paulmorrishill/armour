@@ -259,15 +259,18 @@ It also can add a delay to wait for spindle to run on full speed.
 #define ENDSTOP_PULLUP_Z_MAX true
 #define ENDSTOP_Z_MAX_INVERTING false
 #define MAX_HARDWARE_ENDSTOP_Z false
-#define max_software_endstop_r true
-//END
 
+//Disable all software endstops
+#define max_software_endstop_r false
 #define min_software_endstop_x false
 #define min_software_endstop_y false
 #define min_software_endstop_z false
-#define max_software_endstop_x true
-#define max_software_endstop_y true
-#define max_software_endstop_z true
+#define max_software_endstop_x false
+#define max_software_endstop_y false
+#define max_software_endstop_z false
+
+//END
+
 //DOBOT CHANGE
 #define ENDSTOP_X_BACK_MOVE 2
 #define ENDSTOP_Y_BACK_MOVE 2
@@ -298,11 +301,10 @@ It also can add a delay to wait for spindle to run on full speed.
 #define X_HOME_DIR -1
 #define Y_HOME_DIR 1
 #define Z_HOME_DIR -1
-//END
+//Y MAX Length is important because the Y Axis homes in the opposite direction - toward the max
 #define X_MAX_LENGTH 200
-#define Y_MAX_LENGTH 200
+#define Y_MAX_LENGTH 100
 #define Z_MAX_LENGTH 120
-//DOBOT CHANGE
 //The min pos changes to make the DH params work
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
@@ -328,8 +330,10 @@ It also can add a delay to wait for spindle to run on full speed.
 #define FEATURE_BABYSTEPPING 1
 #define BABYSTEP_MULTIPLICATOR 1
 
-#define DELTA_SEGMENTS_PER_SECOND_PRINT 180 // Move accurate setting for print moves
-#define DELTA_SEGMENTS_PER_SECOND_MOVE 70 // Less accurate setting for other moves
+//DOBOT CHANGE
+#define DELTA_SEGMENTS_PER_SECOND_PRINT 1000 // Move accurate setting for print moves
+#define DELTA_SEGMENTS_PER_SECOND_MOVE 1000 // Less accurate setting for other moves
+//END
 #define EXACT_DELTA_MOVES 1
 
 // Delta settings
@@ -360,7 +364,9 @@ It also can add a delay to wait for spindle to run on full speed.
 #define Z_BACKLASH 0
 #define RAMP_ACCELERATION 1
 #define STEPPER_HIGH_DELAY 0
-#define DIRECTION_DELAY 0
+//DOBOT Direction change delay
+#define DIRECTION_DELAY 1
+//END
 #define STEP_DOUBLER_FREQUENCY 12000
 #define ALLOW_QUADSTEPPING 1
 #define DOUBLE_STEP_DELAY 0 // time in microseconds
@@ -373,7 +379,7 @@ It also can add a delay to wait for spindle to run on full speed.
 #define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_Y 100
 #define MAX_TRAVEL_ACCELERATION_UNITS_PER_SQ_SECOND_Z 100
 #define INTERPOLATE_ACCELERATION_WITH_Z 0
-#define ACCELERATION_FACTOR_TOP 100
+#define ACCELERATION_FACTOR_TOP 10
 #define MAX_JERK 0
 #define MAX_ZJERK 0
 //END
@@ -410,7 +416,10 @@ It also can add a delay to wait for spindle to run on full speed.
 #define ACK_WITH_LINENUMBER 1
 #define WAITING_IDENTIFIER "wait"
 #define ECHO_ON_EXECUTE 1
-#define EEPROM_MODE 1
+//DOBOT CHANGE !!!!!IMPORTANT!!!!!
+//Without this all these settings will most likely be overwritten by ones stored in EEPROM
+#define EEPROM_MODE 0
+//END
 #undef PS_ON_PIN
 #define PS_ON_PIN ORIG_PS_ON_PIN
 #define JSON_OUTPUT 0

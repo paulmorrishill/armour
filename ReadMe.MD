@@ -46,8 +46,9 @@ The switch mounting block can be 3D printed from the stl file in dobot/HomeSwitc
 - Compile and program the arduino mega
 - Open Repetier host and confirm that all the arm functions are working. Servos can be adjusted using [M340](http://reprap.org/wiki/Gcode#M340:_Control_the_servos)
 
-# Development
+# Running/Development
 To run this project you'll need visual studio. Set the start up project to "ConsoleArmControl". That is the main entry point at this stage.
+Currently set up with Up/left/right/down arrows controlling X/Y coordinates. +/- controlling Z coordinate. WASD controlling the 2 servo positions. H to home. ALT+1 store position 1. 1 Move to position 1.
 Where possible write with TDD.
 
 ## Forward kinematics
