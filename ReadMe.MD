@@ -25,7 +25,7 @@ To wire up the arm start by putting 3 jumpers across all 3 microstepping switche
 
 Then put the A4988 stepper drivers into the slots shown in the image and connect the stepper cables.
 
-You'll need a 5V power supply for the RAMPS board, connected to the green connector in the image above. I used the one that came with the Dobot by chopping the jack off the end and wiring it in.
+You'll need a 12V power supply for the RAMPS board, connected to the green connector in the image above. I used the one that came with the Dobot by chopping the jack off the end and wiring it in.
 
 Also put a jumper across the middle and inner pins next to the servo connectors to power join the VCC to the servo VCC.
 
@@ -46,8 +46,16 @@ The switch mounting block can be 3D printed from the stl file in dobot/HomeSwitc
 
 # Running/Development
 To run this project you'll need visual studio. Set the start up project to "ConsoleArmControl". That is the main entry point at this stage.
-Currently set up with Up/left/right/down arrows controlling X/Y coordinates. +/- controlling Z coordinate. WASD controlling the 2 servo positions. H to home. ALT+1 store position 1. 1 Move to position 1.
-Where possible write with TDD.
+Currently set up with
+
+- Up/left/right/down arrows controlling X/Y coordinates.
+- +/- controlling Z coordinate.
+- WASD controlling the 2 servo positions.
+- H to home.
+- ALT+5 store position 5. 5 Move to position 5.
+- Shift makes every move in small increments
+
+When adding to the project where possible develop with TDD.
 
 ## Forward kinematics
 The forward kinematics uses a series of Denavit-Hartenberg matricies with parameters specified by the arm being controlled. For now this is the Dobot arm parameters but could be any arm.
