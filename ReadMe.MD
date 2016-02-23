@@ -12,12 +12,11 @@ Obviously this software is the host software but it's not the greatest tool to u
 #Dobot
 The dobot is configured with the three axes laid out in the following arangement.
 
-![ramps wiring](documentation/axis-labeling-with-angles.png)
+![axis labeling](documentation/axis-labeling-with-angles.png)
 
-##Wiring the Dobot
+##Wiring the Dobot with RAMPS
 I'd recommend using the RAMPS 1.4 driver board as it provides outputs for all functions relating to the arm.
 
-###RAMPS
 Here is a picture of the RAMPS board wired up to the Dobot outputs.
 
 ![ramps wiring](documentation/ramps-wiring.jpg)
@@ -31,11 +30,11 @@ You'll need a 5V power supply for the RAMPS board, connected to the green connec
 Also put a jumper across the middle and inner pins next to the servo connectors to power join the VCC to the servo VCC.
 
 ###Endstops
-For some reason the people who made the Dobot decided not to implement any kind of end stop on the arm. I assume they intended to use the 2 axis angle sensors that are mounted on each segment. I couldn't find any code that would allow me to hook into these sensors so I opted for the simple route and put some physical end stops in.
+For some reason the people who made the Dobot decided not to implement any kind of end stop on the arm. I assume they intended to use the 2 axis angle sensors that are mounted on each segment. I couldn't find any code that would allow me to hook into these sensors so I opted for the simple route and put some physical end stops in. I'm also not sure how they intended to get over the gyroscope drift issue.
 
-![ramps wiring](documentation/end-stop-block.jpg)
+![end-stops](documentation/end-stop-block.jpg)
 
-The switch mounting block can be 3D printed from the stl file in dobot/HomeSwitchBlock.stl
+The switch mounting block can be 3D printed from the stl file in dobot/HomeSwitchBlock.stl.
 
 ##Configuring the repetier firmware
 - Download the [Arduino](https://www.arduino.cc/) IDE if you don't already have it.
