@@ -238,19 +238,24 @@ It also can add a delay to wait for spindle to run on full speed.
 //These need to match your specific end stop config
 #define ENDSTOP_PULLUP_X_MIN true
 #define ENDSTOP_X_MIN_INVERTING true
-#define MIN_HARDWARE_ENDSTOP_X true
+#define MIN_HARDWARE_ENDSTOP_X false
+
 #define ENDSTOP_PULLUP_Y_MIN true
 #define ENDSTOP_Y_MIN_INVERTING true
-#define MIN_HARDWARE_ENDSTOP_Y true
+#define MIN_HARDWARE_ENDSTOP_Y false
+
 #define ENDSTOP_PULLUP_Z_MIN true
 #define ENDSTOP_Z_MIN_INVERTING true
 #define MIN_HARDWARE_ENDSTOP_Z true
+
 #define ENDSTOP_PULLUP_X_MAX true
 #define ENDSTOP_X_MAX_INVERTING false
 #define MAX_HARDWARE_ENDSTOP_X false
+
 #define ENDSTOP_PULLUP_Y_MAX true
-#define ENDSTOP_Y_MAX_INVERTING false
-#define MAX_HARDWARE_ENDSTOP_Y false
+#define ENDSTOP_Y_MAX_INVERTING true
+#define MAX_HARDWARE_ENDSTOP_Y true
+
 #define ENDSTOP_PULLUP_Z_MAX true
 #define ENDSTOP_Z_MAX_INVERTING false
 #define MAX_HARDWARE_ENDSTOP_Z false
@@ -263,9 +268,11 @@ It also can add a delay to wait for spindle to run on full speed.
 #define max_software_endstop_x true
 #define max_software_endstop_y true
 #define max_software_endstop_z true
-#define ENDSTOP_X_BACK_MOVE 5
-#define ENDSTOP_Y_BACK_MOVE 5
+//DOBOT CHANGE
+#define ENDSTOP_X_BACK_MOVE 2
+#define ENDSTOP_Y_BACK_MOVE 2
 #define ENDSTOP_Z_BACK_MOVE 2
+//END
 #define ENDSTOP_X_RETEST_REDUCTION_FACTOR 3
 #define ENDSTOP_Y_RETEST_REDUCTION_FACTOR 3
 #define ENDSTOP_Z_RETEST_REDUCTION_FACTOR 3
@@ -295,9 +302,12 @@ It also can add a delay to wait for spindle to run on full speed.
 #define X_MAX_LENGTH 200
 #define Y_MAX_LENGTH 200
 #define Z_MAX_LENGTH 120
+//DOBOT CHANGE
+//The min pos changes to make the DH params work
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
-#define Z_MIN_POS 0
+#define Z_MIN_POS -63
+//END CHANGE
 #define DISTORTION_CORRECTION 0
 #define DISTORTION_CORRECTION_POINTS 5
 #define DISTORTION_CORRECTION_R 100
@@ -328,11 +338,12 @@ It also can add a delay to wait for spindle to run on full speed.
 #define DELTASEGMENTS_PER_PRINTLINE 24
 #define STEPPER_INACTIVE_TIME 360L
 #define MAX_INACTIVE_TIME 0L
-#define MAX_FEEDRATE_X 200
-#define MAX_FEEDRATE_Y 200
-#define MAX_FEEDRATE_Z 2
+
 //DOBOT CHANGE
 //Set safe homing rates
+#define MAX_FEEDRATE_X 1000
+#define MAX_FEEDRATE_Y 2500
+#define MAX_FEEDRATE_Z 2500
 #define HOMING_FEEDRATE_X 20
 #define HOMING_FEEDRATE_Y 20
 #define HOMING_FEEDRATE_Z 20
@@ -544,549 +555,3 @@ Values must be in range 1..255
 
 
 #endif
-
-/* Below you will find the configuration string, that created this Configuration.h
-
-========== Start configuration string ==========
-{
-    "editMode": 1,
-    "processor": 0,
-    "baudrate": 115200,
-    "bluetoothSerial": -1,
-    "bluetoothBaudrate": 115200,
-    "xStepsPerMM": 80,
-    "yStepsPerMM": 80,
-    "zStepsPerMM": 80,
-    "xInvert": 0,
-    "xInvertEnable": 0,
-    "eepromMode": 1,
-    "yInvert": 0,
-    "yInvertEnable": 0,
-    "zInvert": 0,
-    "zInvertEnable": 0,
-    "extruder": [
-        {
-            "id": 0,
-            "heatManager": 3,
-            "pidDriveMin": 40,
-            "pidDriveMax": 230,
-            "pidMax": 255,
-            "sensorType": 1,
-            "sensorPin": "TEMP_0_PIN",
-            "heaterPin": "HEATER_0_PIN",
-            "maxFeedrate": 50,
-            "startFeedrate": 20,
-            "invert": "0",
-            "invertEnable": "0",
-            "acceleration": 5000,
-            "watchPeriod": 1,
-            "pidP": 7,
-            "pidI": 2,
-            "pidD": 40,
-            "advanceK": 0,
-            "advanceL": 0,
-            "waitRetractTemp": 150,
-            "waitRetractUnits": 0,
-            "waitRetract": 0,
-            "stepsPerMM": 370,
-            "coolerPin": -1,
-            "coolerSpeed": 255,
-            "selectCommands": "",
-            "deselectCommands": "",
-            "xOffset": 0,
-            "yOffset": 0,
-            "zOffset": 0,
-            "xOffsetSteps": 0,
-            "yOffsetSteps": 0,
-            "zOffsetSteps": 0,
-            "stepper": {
-                "name": "Extruder 0",
-                "step": "ORIG_E0_STEP_PIN",
-                "dir": "ORIG_E0_DIR_PIN",
-                "enable": "ORIG_E0_ENABLE_PIN"
-            },
-            "advanceBacklashSteps": 0,
-            "decoupleTestPeriod": 12,
-            "jamPin": -1,
-            "jamPullup": "0"
-        }
-    ],
-    "uiLanguage": 0,
-    "uiController": 0,
-    "xMinEndstop": 1,
-    "yMinEndstop": 1,
-    "zMinEndstop": 1,
-    "xMaxEndstop": 0,
-    "yMaxEndstop": 0,
-    "zMaxEndstop": 0,
-    "motherboard": 33,
-    "driveSystem": 0,
-    "xMaxSpeed": 200,
-    "xHomingSpeed": 40,
-    "xTravelAcceleration": 1000,
-    "xPrintAcceleration": 1000,
-    "yMaxSpeed": 200,
-    "yHomingSpeed": 40,
-    "yTravelAcceleration": 1000,
-    "yPrintAcceleration": 1000,
-    "zMaxSpeed": 2,
-    "zHomingSpeed": 2,
-    "zTravelAcceleration": 100,
-    "zPrintAcceleration": 100,
-    "xMotor": {
-        "name": "X motor",
-        "step": "ORIG_X_STEP_PIN",
-        "dir": "ORIG_X_DIR_PIN",
-        "enable": "ORIG_X_ENABLE_PIN"
-    },
-    "yMotor": {
-        "name": "Y motor",
-        "step": "ORIG_Y_STEP_PIN",
-        "dir": "ORIG_Y_DIR_PIN",
-        "enable": "ORIG_Y_ENABLE_PIN"
-    },
-    "zMotor": {
-        "name": "Z motor",
-        "step": "ORIG_Z_STEP_PIN",
-        "dir": "ORIG_Z_DIR_PIN",
-        "enable": "ORIG_Z_ENABLE_PIN"
-    },
-    "enableBacklash": "0",
-    "backlashX": 0,
-    "backlashY": 0,
-    "backlashZ": 0,
-    "stepperInactiveTime": 360,
-    "maxInactiveTime": 0,
-    "xMinPos": 0,
-    "yMinPos": 0,
-    "zMinPos": 0,
-    "xLength": 200,
-    "yLength": 200,
-    "zLength": 120,
-    "alwaysCheckEndstops": "1",
-    "disableX": "0",
-    "disableY": "0",
-    "disableZ": "0",
-    "disableE": "0",
-    "xHomeDir": "-1",
-    "yHomeDir": "-1",
-    "zHomeDir": "-1",
-    "xEndstopBack": 1,
-    "yEndstopBack": 1,
-    "zEndstopBack": 0,
-    "deltaSegmentsPerSecondPrint": 180,
-    "deltaSegmentsPerSecondTravel": 70,
-    "deltaDiagonalRod": 445,
-    "deltaHorizontalRadius": 209.25,
-    "deltaAlphaA": 210,
-    "deltaAlphaB": 330,
-    "deltaAlphaC": 90,
-    "deltaDiagonalCorrA": 0,
-    "deltaDiagonalCorrB": 0,
-    "deltaDiagonalCorrC": 0,
-    "deltaMaxRadius": 150,
-    "deltaFloorSafetyMarginMM": 15,
-    "deltaRadiusCorrA": 0,
-    "deltaRadiusCorrB": 0,
-    "deltaRadiusCorrC": 0,
-    "deltaXOffsetSteps": 0,
-    "deltaYOffsetSteps": 0,
-    "deltaZOffsetSteps": 0,
-    "deltaSegmentsPerLine": 24,
-    "stepperHighDelay": 0,
-    "directionDelay": 0,
-    "stepDoublerFrequency": 12000,
-    "allowQuadstepping": "1",
-    "doubleStepDelay": 0,
-    "maxJerk": 20,
-    "maxZJerk": 0.3,
-    "moveCacheSize": 16,
-    "moveCacheLow": 10,
-    "lowTicksPerMove": 250000,
-    "enablePowerOnStartup": "1",
-    "echoOnExecute": "1",
-    "sendWaits": "1",
-    "ackWithLineNumber": "1",
-    "killMethod": 1,
-    "useAdvance": "0",
-    "useQuadraticAdvance": "0",
-    "powerInverting": 0,
-    "mirrorX": 0,
-    "mirrorXMotor": {
-        "name": "Extruder 1",
-        "step": "ORIG_E1_STEP_PIN",
-        "dir": "ORIG_E1_DIR_PIN",
-        "enable": "ORIG_E1_ENABLE_PIN"
-    },
-    "mirrorY": 0,
-    "mirrorYMotor": {
-        "name": "Extruder 1",
-        "step": "ORIG_E1_STEP_PIN",
-        "dir": "ORIG_E1_DIR_PIN",
-        "enable": "ORIG_E1_ENABLE_PIN"
-    },
-    "mirrorZ": "0",
-    "mirrorZMotor": {
-        "name": "Extruder 1",
-        "step": "ORIG_E1_STEP_PIN",
-        "dir": "ORIG_E1_DIR_PIN",
-        "enable": "ORIG_E1_ENABLE_PIN"
-    },
-    "mirrorZ3": "0",
-    "mirrorZ3Motor": {
-        "name": "Extruder 2",
-        "step": "ORIG_E2_STEP_PIN",
-        "dir": "ORIG_E2_DIR_PIN",
-        "enable": "ORIG_E2_ENABLE_PIN"
-    },
-    "dittoPrinting": "0",
-    "featureServos": "0",
-    "servo0Pin": 11,
-    "servo1Pin": -1,
-    "servo2Pin": -1,
-    "servo3Pin": -1,
-    "featureWatchdog": "0",
-    "hasHeatedBed": "0",
-    "enableZProbing": "0",
-    "extrudeMaxLength": 160,
-    "homeOrder": "HOME_ORDER_ZXY",
-    "featureController": 0,
-    "uiPrinterName": "RepRap",
-    "uiPrinterCompany": "Home made",
-    "uiPagesDuration": 4000,
-    "uiAnimation": "0",
-    "uiDisablePageswitch": "1",
-    "uiAutoReturnAfter": 30000,
-    "featureKeys": "0",
-    "uiEncoderSpeed": 1,
-    "uiReverseEncoder": "0",
-    "uiKeyBouncetime": 10,
-    "uiKeyFirstRepeat": 500,
-    "uiKeyReduceRepeat": 50,
-    "uiKeyMinRepeat": 50,
-    "featureBeeper": "0",
-    "uiPresetBedTempPLA": 60,
-    "uiPresetBedABS": 110,
-    "uiPresetExtruderPLA": 190,
-    "uiPresetExtruderABS": 240,
-    "uiMinHeatedBed": 30,
-    "uiMaxHeatedBed": 120,
-    "uiMinEtxruderTemp": 170,
-    "uiMaxExtruderTemp": 260,
-    "uiExtruderFeedrate": 2,
-    "uiExtruderRetractDistance": 3,
-    "uiSpeeddependentPositioning": "0",
-    "maxBedTemperature": 120,
-    "bedSensorType": 1,
-    "bedSensorPin": "TEMP_1_PIN",
-    "bedHeaterPin": "HEATER_1_PIN",
-    "bedHeatManager": 0,
-    "bedUpdateInterval": 5000,
-    "bedPidDriveMin": 80,
-    "bedPidDriveMax": 255,
-    "bedPidP": 196,
-    "bedPidI": 33,
-    "bedPidD": 290,
-    "bedPidMax": 255,
-    "bedDecoupleTestPeriod": 300,
-    "caseLightPin": -1,
-    "caseLightDefaultOn": "1",
-    "bedSkipIfWithin": 3,
-    "gen1T0": 25,
-    "gen1R0": 100000,
-    "gen1Beta": 4036,
-    "gen1MinTemp": -20,
-    "gen1MaxTemp": 300,
-    "gen1R1": 0,
-    "gen1R2": 4700,
-    "gen2T0": 25,
-    "gen2R0": 100000,
-    "gen2Beta": 4036,
-    "gen2MinTemp": -20,
-    "gen2MaxTemp": 300,
-    "gen2R1": 0,
-    "gen2R2": 4700,
-    "gen3T0": 25,
-    "gen3R0": 100000,
-    "gen3Beta": 4036,
-    "gen3MinTemp": -20,
-    "gen3MaxTemp": 300,
-    "gen3R1": 0,
-    "gen3R2": 4700,
-    "userTable0": {
-        "r1": 0,
-        "r2": 4700,
-        "temps": [],
-        "numEntries": 0
-    },
-    "userTable1": {
-        "r1": 0,
-        "r2": 4700,
-        "temps": [],
-        "numEntries": 0
-    },
-    "userTable2": {
-        "r1": 0,
-        "r2": 4700,
-        "temps": [],
-        "numEntries": 0
-    },
-    "tempHysteresis": 0,
-    "pidControlRange": 20,
-    "skipM109Within": 2,
-    "extruderFanCoolTemp": 50,
-    "minTemp": 150,
-    "maxTemp": 275,
-    "minDefectTemp": -10,
-    "maxDefectTemp": 290,
-    "arcSupport": "1",
-    "featureMemoryPositionWatchdog": "1",
-    "forceChecksum": "0",
-    "sdExtendedDir": "1",
-    "featureFanControl": "1",
-    "fanPin": "ORIG_FAN_PIN",
-    "featureFan2Control": "0",
-    "fan2Pin": "ORIG_FAN2_PIN",
-    "fanThermoPin": -1,
-    "fanThermoMinPWM": 128,
-    "fanThermoMaxPWM": 255,
-    "fanThermoMinTemp": 45,
-    "fanThermoMaxTemp": 60,
-    "fanThermoThermistorPin": -1,
-    "fanThermoThermistorType": 1,
-    "scalePidToMax": 0,
-    "zProbePin": -1,
-    "zProbeBedDistance": 10,
-    "zProbePullup": "0",
-    "zProbeOnHigh": "0",
-    "zProbeXOffset": 0,
-    "zProbeYOffset": 0,
-    "zProbeWaitBeforeTest": "0",
-    "zProbeSpeed": 2,
-    "zProbeXYSpeed": 150,
-    "zProbeHeight": 40,
-    "zProbeStartScript": "",
-    "zProbeFinishedScript": "",
-    "featureAutolevel": "1",
-    "zProbeX1": 20,
-    "zProbeY1": 20,
-    "zProbeX2": 160,
-    "zProbeY2": 20,
-    "zProbeX3": 100,
-    "zProbeY3": 160,
-    "zProbeSwitchingDistance": 1,
-    "zProbeRepetitions": 1,
-    "sdSupport": "0",
-    "sdCardDetectPin": -1,
-    "sdCardDetectInverted": "0",
-    "uiStartScreenDelay": 1000,
-    "xEndstopBackMove": 5,
-    "yEndstopBackMove": 5,
-    "zEndstopBackMove": 2,
-    "xEndstopRetestFactor": 3,
-    "yEndstopRetestFactor": 3,
-    "zEndstopRetestFactor": 3,
-    "xMinPin": "ORIG_X_MIN_PIN",
-    "yMinPin": "ORIG_Y_MIN_PIN",
-    "zMinPin": "ORIG_Z_MIN_PIN",
-    "xMaxPin": "ORIG_X_MAX_PIN",
-    "yMaxPin": "ORIG_Y_MAX_PIN",
-    "zMaxPin": "ORIG_Z_MAX_PIN",
-    "deltaHomeOnPower": "0",
-    "fanBoardPin": -1,
-    "heaterPWMSpeed": 0,
-    "featureBabystepping": "1",
-    "babystepMultiplicator": 1,
-    "pdmForHeater": "0",
-    "pdmForCooler": "0",
-    "psOn": "ORIG_PS_ON_PIN",
-    "mixingExtruder": "0",
-    "decouplingTestMaxHoldVariance": 20,
-    "decouplingTestMinTempRise": 1,
-    "featureAxisComp": "0",
-    "axisCompTanXY": 0,
-    "axisCompTanXZ": 0,
-    "axisCompTanYZ": 0,
-    "retractOnPause": 2,
-    "pauseStartCommands": "",
-    "pauseEndCommands": "",
-    "distortionCorrection": "0",
-    "distortionCorrectionPoints": 5,
-    "distortionCorrectionR": 100,
-    "distortionPermanent": "1",
-    "distortionUpdateFrequency": 15,
-    "distortionStartDegrade": 0.5,
-    "distortionEndDegrade": 1,
-    "distortionExtrapolateCorners": "0",
-    "distortionXMin": 10,
-    "distortionXMax": 190,
-    "distortionYMin": 10,
-    "distortionYMax": 190,
-    "sdRunOnStop": "",
-    "sdStopHeaterMotorsOnStop": "1",
-    "featureRetraction": "1",
-    "autoretractEnabled": "0",
-    "retractionLength": 3,
-    "retractionLongLength": 13,
-    "retractionSpeed": 40,
-    "retractionZLift": 0,
-    "retractionUndoExtraLength": 0,
-    "retractionUndoExtraLongLength": 0,
-    "retractionUndoSpeed": 20,
-    "filamentChangeXPos": 0,
-    "filamentChangeYPos": 0,
-    "filamentChangeZAdd": 2,
-    "filamentChangeRehome": 1,
-    "filamentChangeShortRetract": 5,
-    "filamentChangeLongRetract": 50,
-    "fanKickstart": 200,
-    "servo0StartPos": -1,
-    "servo1StartPos": -1,
-    "servo2StartPos": -1,
-    "servo3StartPos": -1,
-    "uiDynamicEncoderSpeed": "1",
-    "uiServoControl": 0,
-    "killIfSensorDefect": "0",
-    "jamSteps": 220,
-    "jamSlowdownSteps": 320,
-    "jamSlowdownTo": 70,
-    "jamErrorSteps": 500,
-    "jamMinSteps": 10,
-    "jamAction": 1,
-    "primaryPort": 0,
-    "numMotorDrivers": 0,
-    "motorDrivers": [
-        {
-            "t": "None",
-            "s": "",
-            "invertEnable": "0",
-            "invertDirection": "0",
-            "stepsPerMM": 100,
-            "speed": 10,
-            "dirPin": -1,
-            "stepPin": -1,
-            "enablePin": -1
-        },
-        {
-            "t": "None",
-            "s": "",
-            "invertEnable": "0",
-            "invertDirection": "0",
-            "stepsPerMM": 100,
-            "speed": 10,
-            "dirPin": -1,
-            "stepPin": -1,
-            "enablePin": -1
-        },
-        {
-            "t": "None",
-            "s": "",
-            "invertEnable": "0",
-            "invertDirection": "0",
-            "stepsPerMM": 100,
-            "speed": 10,
-            "dirPin": -1,
-            "stepPin": -1,
-            "enablePin": -1
-        },
-        {
-            "t": "None",
-            "s": "",
-            "invertEnable": "0",
-            "invertDirection": "0",
-            "stepsPerMM": 100,
-            "speed": 10,
-            "dirPin": -1,
-            "stepPin": -1,
-            "enablePin": -1
-        },
-        {
-            "t": "None",
-            "s": "",
-            "invertEnable": "0",
-            "invertDirection": "0",
-            "stepsPerMM": 100,
-            "speed": 10,
-            "dirPin": -1,
-            "stepPin": -1,
-            "enablePin": -1
-        },
-        {
-            "t": "None",
-            "s": "",
-            "invertEnable": "0",
-            "invertDirection": "0",
-            "stepsPerMM": 100,
-            "speed": 10,
-            "dirPin": -1,
-            "stepPin": -1,
-            "enablePin": -1
-        }
-    ],
-    "manualConfig": "",
-    "zHomeMinTemperature": 0,
-    "zHomeXPos": 999999,
-    "zHomeYPos": 999999,
-    "zHomeHeatHeight": 20,
-    "zHomeHeatAll": "1",
-    "zProbeZOffsetMode": 0,
-    "zProbeZOffset": 0,
-    "uiBedCoating": "1",
-    "langEN": "1",
-    "langDE": "1",
-    "langNL": "1",
-    "langPT": "1",
-    "langIT": "1",
-    "langES": "1",
-    "langFI": "1",
-    "langSE": "1",
-    "langFR": "1",
-    "langCZ": "1",
-    "langPL": "1",
-    "langTR": "1",
-    "interpolateAccelerationWithZ": 0,
-    "accelerationFactorTop": 100,
-    "bendingCorrectionA": 0,
-    "bendingCorrectionB": 0,
-    "bendingCorrectionC": 0,
-    "preventZDisableOnStepperTimeout": "0",
-    "supportLaser": "0",
-    "laserPin": -1,
-    "laserOnHigh": "1",
-    "defaultPrinterMode": 0,
-    "supportCNC": "0",
-    "cncWaitOnEnable": 300,
-    "cncWaitOnDisable": 0,
-    "cncEnablePin": -1,
-    "cncEnableWith": "1",
-    "cncDirectionPin": -1,
-    "cncDirectionCW": "1",
-    "startupGCode": "",
-    "jsonOutput": "0",
-    "bedLevelingMethod": 0,
-    "bedCorrectionMethod": 0,
-    "bedLevelingGridSize": 5,
-    "bedLevelingRepetitions": 5,
-    "bedMotor1X": 0,
-    "bedMotor1Y": 0,
-    "bedMotor2X": 200,
-    "bedMotor2Y": 0,
-    "bedMotor3X": 100,
-    "bedMotor3Y": 200,
-    "zProbeRequiresHeating": "0",
-    "zProbeMinTemperature": 150,
-    "hasMAX6675": false,
-    "hasMAX31855": false,
-    "hasGeneric1": false,
-    "hasGeneric2": false,
-    "hasGeneric3": false,
-    "hasUser0": false,
-    "hasUser1": false,
-    "hasUser2": false,
-    "numExtruder": 1,
-    "version": 92.8,
-    "primaryPortName": ""
-}
-========== End configuration string ==========
-
-*/
