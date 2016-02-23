@@ -1,5 +1,4 @@
-#Armour
-##Open source robotic arm control software.
+#Armour - open source robotic arm control software.
 This project was designed to be a replacement for the useless software provided with the Dobot robotic arm, but should work well with any robotic arm that can be modelled using Denavit-Hartenberg parameters.
 This is in a very, very early stage, and is only a console app at the moment, allowing control of the arm through the keyboard.
 
