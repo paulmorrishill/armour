@@ -34,7 +34,7 @@ Also put a jumper across the middle and inner pins next to the servo connectors 
 ###Endstops
 For some reason the people who made the Dobot decided not to implement any kind of end stop on the arm. I assume they intended to use the 2 axis angle sensors that are mounted on each segment. I couldn't find any code that would allow me to hook into these sensors so I opted for the simple route and put some physical end stops in.
 
-![ramps wiring](documentation/end-stop-blocks.jpg)
+![ramps wiring](documentation/end-stop-block.jpg)
 
 The switch mounting block can be 3D printed from the stl file in dobot/HomeSwitchBlock.stl
 
