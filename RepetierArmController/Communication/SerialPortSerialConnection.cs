@@ -31,7 +31,6 @@ namespace RepetierArmController.Communication
       }
       var outData = ReceivedData;
       ReceivedData = "";
-      Console.WriteLine(outData);
       return outData;
     }
   }

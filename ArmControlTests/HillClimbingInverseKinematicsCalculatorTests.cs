@@ -2,6 +2,7 @@
 using ArmControl.Kinematics.Dobot;
 using Should;
 using Xunit;
+using Xunit.Sdk;
 
 namespace ArmControlTests
 {
@@ -19,7 +20,7 @@ namespace ArmControlTests
     [Fact]
     public void WhenAPositionIsUnreachableItThrowsAnUnreachablePositionException()
     {
-      
+      Assert.Throws<UnreachablePositionException>(() => TryToAchievePosition(10, 0, 0));
     }
 
     [Fact]

@@ -50,5 +50,11 @@ namespace RepetierArmControllerTests
       {
         GcodeCreator.GenerateHomeCommand().ShouldEqual("G28");
       }
+
+      [Fact]
+      public void CanGenerateDwellCommand()
+      {
+        GcodeCreator.GenerateDwellCommand(23).ShouldEqual("G4 P23");
+      }
   }
 }

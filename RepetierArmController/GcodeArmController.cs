@@ -36,6 +36,8 @@ namespace RepetierArmController
     {
       Communicator.SendCommand(GcodeCreator.GenerateServoMove(servoIndex, position));
       Communicator.WaitForReady();
+      Communicator.SendCommand(GcodeCreator.GenerateDwellCommand(10));
+      Communicator.WaitForReady();
     }
 
     public void SetDeviceState(int deviceIndex, bool state)

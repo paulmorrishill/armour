@@ -9,73 +9,139 @@ namespace ConsoleArmControl
 {
   class Program
   {
+    private static GcodeArmController _controller;
+    private static DobotDhKinematicChain _kinematicChain;
+    private static Vector3D _lastSafePosition;
+    private static Vector3D _currentPosition;
+    private static int _currentServoPos1;
+    private static int _currentServoPos2;
+
     static void Main(string[] args)
     {
-      var serial = new SerialPortSerialConnection();
-      var con = new SerialRepetierCommunicator(serial);
+      var con = new SerialRepetierCommunicator(new SerialPortSerialConnection());
       var gcodeCreator = new RepetierGCodeCreator();
-      var controller = new GcodeArmController(con, gcodeCreator);
-      var kinematicChain = new DobotDhKinematicChain();
-      
-      controller.ConnectToArm("COM23");
-      controller.HomeArm();
+      _controller = new GcodeArmController(con, gcodeCreator);
+      _kinematicChain = new DobotDhKinematicChain();
+      var positionSlots  = new Dictionary<int, Vector3D>();
+      _currentServoPos1 = 1400;
+      _currentServoPos2 = 1400;
+      _controller.ConnectToArm("COM25");
+      _controller.HomeArm();
       var homePosition = new Vector3D(0.061, 0.0, 0.1);
-      Vector3D currentPosition = homePosition.Clone();
-      Vector3D lastSafePosition = currentPosition.Clone();
+      _currentPosition = homePosition;
+      _lastSafePosition = _currentPosition;
+
+      var stateList = new List<State>();
 
       while (true)
       {
-        var key = Console.ReadKey();
+        var key = Console.ReadKey(true);
         var change = 0.01;
+        var servoChange = 25;
         if (key.Modifiers == ConsoleModifiers.Shift)
         {
           change = 0.001;
+          servoChange = 10;
         }
         switch (key.Key)
         {
           case ConsoleKey.LeftArrow:
-            currentPosition.X -= change;
+            _currentPosition.X -= change;
             break;
           case ConsoleKey.RightArrow:
-            currentPosition.X += change;
+            _currentPosition.X += change;
             break;
           case ConsoleKey.UpArrow:
-            currentPosition.Y += change;
+            _currentPosition.Y += change;
             break;
           case ConsoleKey.DownArrow:
-            currentPosition.Y -= change;
+            _currentPosition.Y -= change;
             break;
         }
 
-        switch (key.KeyChar)
+        switch (key.KeyChar.ToString().ToLower())
         {
-          case '-':
-            currentPosition.Z -= change;
+          case "-":
+            _currentPosition.Z -= change;
             break;
-          case '+':
-            currentPosition.Z += change;
+          case "+":
+            _currentPosition.Z += change;
             break;
-          case 'h':
-            controller.HomeArm();
-            currentPosition = homePosition.Clone();
+          case "h":
+            _controller.HomeArm();
+            _currentPosition = homePosition;
             break;
+          case "s":
+            _currentServoPos1 += servoChange;
+            _controller.SetServoPosition(0, _currentServoPos1);
+            break;
+          case "w":
+            _currentServoPos1 -= servoChange;
+            _controller.SetServoPosition(0, _currentServoPos1);
+            break;
+          case "a":
+            _currentServoPos2 += servoChange;
+            _controller.SetServoPosition(1, _currentServoPos2);
+            break;
+          case "d":
+            _currentServoPos2 -= servoChange;
+            _controller.SetServoPosition(1, _currentServoPos2);
+            break;
+          case " ":
+            stateList.Add(new State
+            {
+              Position = _currentPosition,
+              ServoPosition1 = _currentServoPos1,
+              ServoPosition2 = _currentServoPos2
+            });
+            break;
+          case "p":
+            
+            break;
+        }
+
+        int positionNum;
+        bool isNumber = int.TryParse(key.KeyChar.ToString(), out positionNum);
+        if (isNumber)
+        {
+          if (key.Modifiers == ConsoleModifiers.Alt)
+          {
+            if (positionSlots.ContainsKey(positionNum))
+            {
+              positionSlots[positionNum] = _currentPosition;
+            }
+            else
+            {
+              positionSlots.Add(positionNum, _currentPosition);
+            }
+          }
+          else
+          {
+            if(positionSlots.ContainsKey(positionNum)) _currentPosition = positionSlots[positionNum];
+          }
         }
 
         try
         {
-          AdjustChainForPosition(kinematicChain, currentPosition.X, currentPosition.Y, currentPosition.Z);
-          ApplyChain(kinematicChain, controller);
-          var x = kinematicChain.InputLinks[0].Theta;
-          var y = kinematicChain.InputLinks[1].Theta;
-          var z = kinematicChain.InputLinks[2].Theta;
-          Console.WriteLine($"Moved to position ({currentPosition.X}, {currentPosition.Y}, {currentPosition.Z}) ({x}°, {y}°, {z}°)");
-          lastSafePosition = currentPosition.Clone();
+          AdjustChainForPosition(_kinematicChain, _currentPosition.X, _currentPosition.Y, _currentPosition.Z);
+          ApplyChain(_kinematicChain, _controller);
+          var x = _kinematicChain.InputLinks[0].Theta;
+          var y = _kinematicChain.InputLinks[1].Theta;
+          var z = _kinematicChain.InputLinks[2].Theta;
+          Console.Clear();
+          _lastSafePosition = _currentPosition;
+          Console.WriteLine($"Current position ({_currentPosition.X}, {_currentPosition.Y}, {_currentPosition.Z})");
+          Console.WriteLine($"Current angles ({x}°, {y}°, {z}°)");
         }
         catch (UnreachablePositionException)
         {
-          Console.WriteLine("Could not reach position.");
-          currentPosition = lastSafePosition.Clone();
+          _currentPosition = _lastSafePosition;
+          Console.WriteLine($"Could not reach position: {_currentPosition.X}, {_currentPosition.Y}, {_currentPosition.Z}");
         }
+
+        Console.WriteLine($"Servo 1 {_currentServoPos1} Servo 2 {_currentServoPos2}");
+
+        Console.WriteLine("");
       }
 
     }
@@ -108,5 +174,12 @@ namespace ConsoleArmControl
       var links = chain.InputLinks;
       controller.SetPosition(links[0].Theta, links[1].Theta, links[2].Theta, 14000);
     }
+  }
+
+  class State
+  {
+    public Vector3D Position { get; set; }
+    public int ServoPosition1 { get; set; }
+    public int ServoPosition2 { get; set; }
   }
 }

@@ -44,6 +44,7 @@
     <Compile Include="ArmController.cs" />
     <Compile Include="CommandSets\Command.cs" />
     <Compile Include="CommandSets\CommandSet.cs" />
+    <Compile Include="ArmManipulator.cs" />
     <Compile Include="Kinematics\HillClimbingInverseKinematicsCalculator.cs" />
     <Compile Include="Kinematics\KinematicChain.cs" />
     <Compile Include="Kinematics\KinematicChainBase.cs" />

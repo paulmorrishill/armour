@@ -18,7 +18,7 @@ namespace ArmControl.Kinematics
       TargetPosition = targetPosition;
       KinematicChain = kinematicChain;
       SetCurrentThetasFromChain();
-      CurrentDelta = 1;
+      CurrentDelta = 30;
       NumberOfThetas = kinematicChain.InputLinks.Select(link => link.Theta).ToArray().Length;
       LastDistanceToTarget = kinematicChain.CalculateResultantPosition().EuclidianDistanceTo(targetPosition);
 
@@ -56,7 +56,7 @@ namespace ArmControl.Kinematics
       KinematicChain.Randomize();
       SetCurrentThetasFromChain();
       LastDistanceToTarget = GetNewDistanceToTarget();
-      CurrentDelta = 1;
+      CurrentDelta = 30;
     }
 
 

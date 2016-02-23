@@ -67,9 +67,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FakeKinematicChain.cs" />
     <Compile Include="HillClimbingInverseKinematicsCalculatorTests.cs" />
     <Compile Include="DobotDhKinematicChainTests.cs" />
     <Compile Include="HomeArmTests.cs" />
+    <Compile Include="ArmManipulatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

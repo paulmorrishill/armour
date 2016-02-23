@@ -49,10 +49,5 @@ namespace ArmControl.Kinematics
       var dz = Z - vector.Z;
       return Math.Sqrt(dx*dx + dy*dy + dz*dz);
     }
-
-    public Vector3D Clone()
-    {
-      return new Vector3D(X, Y, Z);
-    }
   }
 }

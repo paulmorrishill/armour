@@ -24,6 +24,11 @@ namespace RepetierArmController.Communication
       return "G28";
     }
 
+    public string GenerateDwellCommand(int milliseconds)
+    {
+      return $"G4 P{milliseconds}";
+    }
+
     public string GenerateFanOnCommand(int fanNumber)
     {
       return $"M106 P{fanNumber}";
