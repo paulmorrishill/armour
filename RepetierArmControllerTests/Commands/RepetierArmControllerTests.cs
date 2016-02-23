@@ -61,12 +61,11 @@ namespace RepetierArmControllerTests.Commands
       Communicator.HasWaitedForReadySinceLastCommand.ShouldBeTrue();
     }
 
-
     [Fact]
     public void CanSetServoPosition()
     {
       GcodeGenerator.Setup(r => r.GenerateServoMove(4, 123)).Returns("SERV");
-      GcodeGenerator.Setup(r => r.GenerateDwellCommand(10)).Returns("DWELL");
+      GcodeGenerator.Setup(r => r.GenerateDwellCommand(100)).Returns("DWELL");
       Controller.SetServoPosition(4, 123);
 
       Communicator.LastBeforeLastSentCommand.ShouldEqual("SERV");

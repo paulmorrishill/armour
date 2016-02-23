@@ -52,7 +52,6 @@ Currently set up with
 - +/- controlling Z coordinate.
 - WASD controlling the 2 servo positions.
 - H to home.
-- ALT+5 store position 5. 5 Move to position 5.
 - Shift makes every move in small increments
 
 When adding to the project where possible develop with TDD.
