@@ -13,7 +13,6 @@ namespace ArmControlTests
         private Mock<InverseKinematicsCalculator> KinematicsCalculatorMock;
         private Mock<ArmPresenter> MockPresenter;
 
-
         public ArmManipulatorTests()
         {
             MockController = new Mock<ArmController>();
@@ -263,6 +262,30 @@ namespace ArmControlTests
             MockPresenter.Verify(r => r.NumberOfStepsInRecordingChanged(2));
         }
 
+        [Fact]
+        public void CanDeleteLastStepInRecording()
+        {
+            Manipulator.SetPosition(50, 100, 150);
+            Manipulator.RecordStep();
+            Manipulator.SetPosition(3, 400, 50);
+            Manipulator.RecordStep();
+
+            MockPresenter.Reset();
+            MockController.Reset();
+
+            Manipulator.DeleteLastStep();
+
+            Manipulator.PlayBackSteps();
+            AssertPositionIs(50, 100, 150);
+            MockPresenter.Verify(r => r.NumberOfStepsInRecordingChanged(1));
+        }
+
+        [Fact]
+        public void WhenThereIsNoLastStepToDeleteItDoesNothing()
+        {
+            Manipulator.DeleteLastStep();
+        }
+
         private void AssertNoPositionWasSet()
         {
             MockController.Verify(r => r.SetPosition(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>()), Times.Never);
@@ -287,6 +310,18 @@ namespace ArmControlTests
             MockPresenter.Verify(r => r.ArmPositionChanged(new Vector3D(2, 4, 6)));
         }
 
+        [Fact]
+        public void CanAddADwellStepToTheRecording()
+        {
+            Manipulator.SetPosition(120, 0, 40);
+            Manipulator.AddDwellStep();
+            Manipulator.PlayBackSteps();
+
+            MockController.Verify(r => r.Dwell(1000));
+
+            AssertPositionIs(120, 0, 40);
+            MockPresenter.Verify(r => r.NumberOfStepsInRecordingChanged(1));
+        }
 
         private void AssertPositionIs(double x, double y, double z)
         {

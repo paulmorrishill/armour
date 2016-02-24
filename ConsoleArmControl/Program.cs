@@ -39,6 +39,9 @@ namespace ConsoleArmControl
                     case ConsoleKey.DownArrow:
                         manipulator.DecrementY(precisely);
                         break;
+                    case ConsoleKey.Backspace:
+                        manipulator.DeleteLastStep();
+                        break;
                     case ConsoleKey.Delete:
                         manipulator.ClearRecording();
                         break;
@@ -72,6 +75,9 @@ namespace ConsoleArmControl
                         break;
                     case "p":
                         manipulator.PlayBackSteps();
+                        break;
+                    case "o":
+                        manipulator.AddDwellStep();
                         break;
                     case "g":
                         Console.Write("Play back specific step in recording: ");
@@ -174,10 +180,20 @@ namespace ConsoleArmControl
             Console.WriteLine();
 
             PrintLine("Controls", ConsoleColor.Yellow);
-            Console.WriteLine("Arrows move arm in XY plane, +- moves in Z.");    
-            Console.WriteLine("WASD for servo control.");    
-            Console.WriteLine("Space bar adds step to recording. P plays back recording. DEL clears recording.");    
-            
+            Console.WriteLine("Arrows move arm in XY plane");
+            Console.WriteLine("+/- moves Z up and down");    
+            Console.WriteLine("WASD for servo control");
+
+            Console.WriteLine();
+            Console.WriteLine();
+
+            PrintLine("Record and playback", ConsoleColor.Yellow);
+            Console.WriteLine("Space bar adds step to recording");
+            Console.WriteLine("P plays back recording");
+            Console.WriteLine("G to go to a specific step in the recording");
+            Console.WriteLine("O to add a 1 second dwell step");
+            Console.WriteLine("Backspace deletes last step in recording");
+            Console.WriteLine("DEL clears recording");    
         }
     }
 }

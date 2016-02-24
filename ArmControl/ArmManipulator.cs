@@ -150,7 +150,7 @@ namespace ArmControl
                 Position = CurrentPosition,
                 ServoPositions = clonedServoPositions
             });
-            Presenter.NumberOfStepsInRecordingChanged(Recording.Count);
+            NumberOfStepsChanged();
         }
 
         public void PlayBackSteps()
@@ -163,6 +163,11 @@ namespace ArmControl
 
         private void ApplyState(ArmState armState)
         {
+            if (armState.Dwell != null)
+            {
+                ArmController.Dwell(armState.Dwell.Value);
+                return;
+            }
             CurrentPosition = armState.Position;
             SetArmToCurrentPosition();
             foreach (var servoPos in armState.ServoPositions)
@@ -177,6 +182,7 @@ namespace ArmControl
         {
             public Vector3D Position;
             public Dictionary<int, int> ServoPositions { get; set; }
+            public int? Dwell { get; set; }
         }
 
         public void DecrementServoPosition(int servoIndex, bool precisely = false)
@@ -189,7 +195,7 @@ namespace ArmControl
         public void ClearRecording()
         {
             Recording.Clear();
-            Presenter.NumberOfStepsInRecordingChanged(0);
+            NumberOfStepsChanged();
         }
 
         public void PlayBackStep(int stepIndex)
@@ -200,6 +206,27 @@ namespace ArmControl
                 return;
             }
             ApplyState(Recording[stepIndex]);
+        }
+
+        public void DeleteLastStep()
+        {
+            if (Recording.Count == 0) return;
+            Recording.RemoveAt(Recording.Count - 1);
+            NumberOfStepsChanged();
+        }
+
+        public void AddDwellStep()
+        {
+            Recording.Add(new ArmState
+            {
+                Dwell = 1000
+            });
+            NumberOfStepsChanged();
+        }
+
+        public void NumberOfStepsChanged()
+        {
+            Presenter.NumberOfStepsInRecordingChanged(Recording.Count);
         }
     }
 }

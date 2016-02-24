@@ -52,5 +52,10 @@ namespace RepetierArmController
             Communicator.WaitForReady();
         }
 
+        public void Dwell(int numberOfMilliseconds)
+        {
+            Communicator.SendCommand(GcodeCreator.GenerateDwellCommand(numberOfMilliseconds));
+            Communicator.WaitForReady();    
+        }
     }
 }

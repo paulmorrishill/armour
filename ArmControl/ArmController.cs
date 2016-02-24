@@ -7,5 +7,6 @@
       void SetPosition(double x, double y, double z, double feedRate);
       void SetServoPosition(int servoIndex, int position);
       void SetDeviceState(int deviceIndex, bool state);
+      void Dwell(int numberOfMilliseconds);
     }
 }
