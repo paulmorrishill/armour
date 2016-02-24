@@ -11,6 +11,7 @@ namespace ArmControlTests
         private ArmManipulator Manipulator;
         private Mock<ArmController> MockController;
         private Mock<InverseKinematicsCalculator> KinematicsCalculatorMock;
+        private Mock<ArmPresenter> MockPresenter;
 
 
         public ArmManipulatorTests()
@@ -24,14 +25,16 @@ namespace ArmControlTests
               {
                   ((FakeKinematicChain)chain).SetLinksToPosition(targetPosition);
               });
+            MockPresenter = new Mock<ArmPresenter>();
 
-            Manipulator = new ArmManipulator(MockController.Object, KinematicsCalculatorMock.Object, fakeChain);
+            Manipulator = new ArmManipulator(MockController.Object, MockPresenter.Object, KinematicsCalculatorMock.Object, fakeChain);
         }
 
         [Fact]
         public void ItInitialisesAtAReachablePosition()
         {
-            AssertPositionIs(0.061, 0.0, 0.1);
+            var currentPos = Manipulator.GetCurrentArmPosition();
+            currentPos.ShouldEqual(new Vector3D(0.061, 0.0, 0.1));
         }
 
         [Fact]
@@ -138,6 +141,7 @@ namespace ArmControlTests
 
             Manipulator.IncrementX();
             AssertPositionIs(safePosition.X, safePosition.Y, safePosition.Z);
+            MockPresenter.Verify(r => r.TargetPositionUnreachable());
         }
 
         [Fact]
@@ -153,6 +157,7 @@ namespace ArmControlTests
             Manipulator.SetServoPosition(0, 123);
             Manipulator.IncrementServoPosition(0);
             MockController.Verify(r => r.SetServoPosition(0, 148));
+            MockPresenter.Verify(r => r.ServoPositionChanged(0, 148));
         }
 
         [Fact]
@@ -209,6 +214,32 @@ namespace ArmControlTests
         }
 
         [Fact]
+        public void CanClearRecording()
+        {
+            Manipulator.RecordStep();
+            Manipulator.ClearRecording();
+            Manipulator.PlayBackSteps();
+            AssertNoPositionWasSet();
+            MockPresenter.Verify(r => r.NumberOfStepsInRecordingChanged(0));
+        }
+
+        [Fact]
+        public void AfterRecordingAStepThePresenterIsUpdated()
+        {
+            Manipulator.SetPosition(50, 100, 150);
+
+            Manipulator.RecordStep();
+            Manipulator.RecordStep();
+            MockPresenter.Verify(r => r.NumberOfStepsInRecordingChanged(1));
+            MockPresenter.Verify(r => r.NumberOfStepsInRecordingChanged(2));
+        }
+
+        private void AssertNoPositionWasSet()
+        {
+            MockController.Verify(r => r.SetPosition(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>(), It.IsAny<double>()), Times.Never);
+        }
+
+        [Fact]
         public void DoesNotScrewUpWhenThePreviousStepDidNotIncludeAServoInTheCurrentStep()
         {
             Manipulator.SetServoPosition(1, 67);
@@ -218,6 +249,13 @@ namespace ArmControlTests
             Manipulator.RecordStep();
 
             Manipulator.PlayBackSteps();
+        }
+
+        [Fact]
+        public void WhenThePositionChangesThePositionUpdatePresenterIsCalled()
+        {
+            Manipulator.SetPosition(2, 4, 6);
+            MockPresenter.Verify(r => r.ArmPositionChanged(new Vector3D(2, 4, 6)));
         }
 
 

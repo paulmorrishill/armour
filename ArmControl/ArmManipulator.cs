@@ -5,17 +5,10 @@ using ArmControl.Kinematics;
 
 namespace ArmControl
 {
-    public class ArmPresenter
-    {
-        public void ArmStateUpdated(Vector3D currentPosition)
-        {
-
-        }
-    }
-
     public class ArmManipulator
     {
         private ArmController ArmController;
+        private readonly ArmPresenter Presenter;
         private Vector3D CurrentPosition;
         private InverseKinematicsCalculator InverseKinematicsCalculator;
         private KinematicChain KinematicChain;
@@ -29,12 +22,13 @@ namespace ArmControl
 
         private List<ArmState> Recording { get; }
 
-        public ArmManipulator(ArmController armController, InverseKinematicsCalculator inverseKinematicsCalculator,
+        public ArmManipulator(ArmController armController, ArmPresenter presenter, InverseKinematicsCalculator inverseKinematicsCalculator,
             KinematicChain kinematicChain)
         {
             KinematicChain = kinematicChain;
             InverseKinematicsCalculator = inverseKinematicsCalculator;
             ArmController = armController;
+            Presenter = presenter;
             CurrentPosition = new Vector3D
             {
                 X = 0.061,
@@ -43,7 +37,6 @@ namespace ArmControl
             };
             CurrentServoPositions = new Dictionary<int, int>();
             Recording = new List<ArmState>();
-            SetArmToCurrentPosition();
         }
 
         private void SetArmToCurrentPosition()
@@ -56,10 +49,12 @@ namespace ArmControl
                 var z = KinematicChain.InputLinks[2].Theta;
                 ArmController.SetPosition(x, y, z, 16000);
                 LastSafePosition = CurrentPosition;
+                Presenter.ArmPositionChanged(CurrentPosition);
             }
             catch (UnreachablePositionException)
             {
                 CurrentPosition = LastSafePosition;
+                Presenter.TargetPositionUnreachable();
             }
         }
 
@@ -121,7 +116,7 @@ namespace ArmControl
         {
             InitServoPosition(servoIndex);
             CurrentServoPositions[servoIndex] += precisely ? SmallServoIncrement : LargeServoIncrement;
-            ArmController.SetServoPosition(servoIndex, CurrentServoPositions[servoIndex]);
+            SetServoPosition(servoIndex, CurrentServoPositions[servoIndex]);
         }
 
         private void InitServoPosition(int servoIndex)
@@ -143,6 +138,7 @@ namespace ArmControl
             InitServoPosition(servoIndex);
             ArmController.SetServoPosition(servoIndex, position);
             CurrentServoPositions[servoIndex] = position;
+            Presenter.ServoPositionChanged(servoIndex, position);
         }
 
         public void RecordStep()
@@ -154,6 +150,7 @@ namespace ArmControl
                 Position = CurrentPosition,
                 ServoPositions = clonedServoPositions
             });
+            Presenter.NumberOfStepsInRecordingChanged(Recording.Count);
         }
 
         public void PlayBackSteps()
@@ -189,6 +186,10 @@ namespace ArmControl
             CurrentServoPositions[servoIndex] -= precisely ? SmallServoIncrement : LargeServoIncrement;
             SetServoPosition(servoIndex, CurrentServoPositions[servoIndex]);
         }
-    }
 
+        public void ClearRecording()
+        {
+            Recording.Clear();
+        }
+    }
 }

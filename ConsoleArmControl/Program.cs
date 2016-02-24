@@ -18,7 +18,7 @@ namespace ConsoleArmControl
             var controller = new GcodeArmController(con, gcodeCreator);
             controller.ConnectToArm("COM25");
 
-            var manipulator = new ArmManipulator(controller, new HillClimbingInverseKinematicsCalculator(), new DobotDhKinematicChain());
+            var manipulator = new ArmManipulator(controller, new ConsoleArmPresenter(), new HillClimbingInverseKinematicsCalculator(), new DobotDhKinematicChain());
             controller.HomeArm();
 
             while (true)
@@ -38,6 +38,9 @@ namespace ConsoleArmControl
                         break;
                     case ConsoleKey.DownArrow:
                         manipulator.DecrementY(precisely);
+                        break;
+                    case ConsoleKey.Delete:
+                        manipulator.ClearRecording();
                         break;
                 }
 
@@ -71,17 +74,76 @@ namespace ConsoleArmControl
                         manipulator.PlayBackSteps();
                         break;
                 }
-
-                int positionNum;
-                bool isNumber = int.TryParse(key.KeyChar.ToString(), out positionNum);
-
-                /*Console.WriteLine($"Could not reach position: {_currentPosition.X}, {_currentPosition.Y}, {_currentPosition.Z}");
-
-              Console.WriteLine($"Servo 1 {_currentServoPos1} Servo 2 {_currentServoPos2}");
-
-              Console.WriteLine("");*/
             }
 
+        }
+    }
+
+    internal class ConsoleArmPresenter : ArmPresenter
+    {
+        private Vector3D CurrentPosition;
+        private bool PositionUnreachable;
+        private Dictionary<int, int> ServoPositions = new Dictionary<int, int>();
+        private int StepsInRecording;
+         
+        public void ArmPositionChanged(Vector3D currentPosition)
+        {
+            CurrentPosition = currentPosition;
+            PositionUnreachable = false;
+            Render();
+        }
+
+        public void TargetPositionUnreachable()
+        {
+            PositionUnreachable = true;
+            Render();
+        }
+
+        public void ServoPositionChanged(int servoIndex, int position)
+        {
+            if (!ServoPositions.ContainsKey(servoIndex))
+                ServoPositions.Add(servoIndex, 0);
+            ServoPositions[servoIndex] = position;
+            Render();
+        }
+
+        public void NumberOfStepsInRecordingChanged(int numberOfSteps)
+        {
+            StepsInRecording = numberOfSteps;
+            Render();
+        }
+
+        private string R(double v)
+        {
+            return Math.Round(v, 2).ToString();
+        }
+
+        private void Render()
+        {
+            Console.Clear();
+            Console.WriteLine($"Current position ({R(CurrentPosition.X)}, {R(CurrentPosition.Y)}, {R(CurrentPosition.Z)})");
+            Console.Write("Servo positions");
+            foreach (var servoPosition in ServoPositions)
+            {
+                Console.Write($" {servoPosition.Key}: {servoPosition.Value}");
+            }
+            Console.WriteLine();
+            if (PositionUnreachable)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Attempted position move but position was unreachable.");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            Console.WriteLine($"{StepsInRecording} steps in recording - Press P to play back.");
+
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine(" ======================= ");
+            Console.WriteLine();
+            Console.WriteLine("Controls");
+            Console.WriteLine("Arrows move arm in XY plane, +- moves in Z.");    
+            Console.WriteLine("WASD for servo control.");    
+            Console.WriteLine("Space bar adds step to recording. P plays back recording. DEL clears recording.");    
         }
     }
 }

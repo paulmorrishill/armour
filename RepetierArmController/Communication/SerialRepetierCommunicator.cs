@@ -24,7 +24,7 @@
       while (true)
       {
         var rec = Connection.ReadLine();
-        if (rec.Contains("ok") || rec.Contains("wait"))
+        if (rec.Contains("ok"))
           break;
       }
     }
