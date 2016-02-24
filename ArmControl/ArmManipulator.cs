@@ -155,22 +155,21 @@ namespace ArmControl
 
         public void PlayBackSteps()
         {
-            Dictionary<int, int> previousServoPositions = null;
             foreach (var armState in Recording)
             {
-                CurrentPosition = armState.Position;
-                SetArmToCurrentPosition();
-                foreach (var servoPos in armState.ServoPositions)
-                {
-                    if (previousServoPositions != null)
-                    {
-                        var thereWasAPreviousStateForThisServo = previousServoPositions.ContainsKey(servoPos.Key);
-                        if (thereWasAPreviousStateForThisServo && previousServoPositions[servoPos.Key] == servoPos.Value)
-                            continue;
-                    }
-                    SetServoPosition(servoPos.Key, servoPos.Value);
-                }
-                previousServoPositions = armState.ServoPositions;
+                ApplyState(armState);
+            }
+        }
+
+        private void ApplyState(ArmState armState)
+        {
+            CurrentPosition = armState.Position;
+            SetArmToCurrentPosition();
+            foreach (var servoPos in armState.ServoPositions)
+            {
+                if (CurrentServoPositions[servoPos.Key] == servoPos.Value)
+                    continue;
+                SetServoPosition(servoPos.Key, servoPos.Value);
             }
         }
 
@@ -190,6 +189,17 @@ namespace ArmControl
         public void ClearRecording()
         {
             Recording.Clear();
+            Presenter.NumberOfStepsInRecordingChanged(0);
+        }
+
+        public void PlayBackStep(int stepIndex)
+        {
+            if (stepIndex > Recording.Count - 1)
+            {
+                Presenter.StepSpecifiedNotFound();
+                return;
+            }
+            ApplyState(Recording[stepIndex]);
         }
     }
 }

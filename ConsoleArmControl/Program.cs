@@ -73,6 +73,16 @@ namespace ConsoleArmControl
                     case "p":
                         manipulator.PlayBackSteps();
                         break;
+                    case "g":
+                        Console.Write("Play back specific step in recording: ");
+                        var step = Console.ReadLine();
+                        int stepIndex;
+                        var enteredNumber = int.TryParse(step, out stepIndex);
+                        if (enteredNumber)
+                        {
+                            manipulator.PlayBackStep(stepIndex);
+                        }
+                        break;
                 }
             }
 
@@ -85,7 +95,13 @@ namespace ConsoleArmControl
         private bool PositionUnreachable;
         private Dictionary<int, int> ServoPositions = new Dictionary<int, int>();
         private int StepsInRecording;
-         
+        private bool StepWasNotFound;
+
+        public ConsoleArmPresenter()
+        {
+            Render();
+        }
+
         public void ArmPositionChanged(Vector3D currentPosition)
         {
             CurrentPosition = currentPosition;
@@ -113,14 +129,29 @@ namespace ConsoleArmControl
             Render();
         }
 
+        public void StepSpecifiedNotFound()
+        {
+            StepWasNotFound = true;
+            Render();
+        }
+
         private string R(double v)
         {
-            return Math.Round(v, 2).ToString();
+            return Math.Round(v, 3).ToString();
+        }
+
+        private void PrintLine(string line, ConsoleColor color)
+        {
+            var colorBefore = Console.ForegroundColor;
+            Console.ForegroundColor = color;
+            Console.WriteLine(line);
+            Console.ForegroundColor = colorBefore;
         }
 
         private void Render()
         {
             Console.Clear();
+            PrintLine("Arm State", ConsoleColor.Yellow);
             Console.WriteLine($"Current position ({R(CurrentPosition.X)}, {R(CurrentPosition.Y)}, {R(CurrentPosition.Z)})");
             Console.Write("Servo positions");
             foreach (var servoPosition in ServoPositions)
@@ -128,22 +159,25 @@ namespace ConsoleArmControl
                 Console.Write($" {servoPosition.Key}: {servoPosition.Value}");
             }
             Console.WriteLine();
+
             if (PositionUnreachable)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Attempted position move but position was unreachable.");
-                Console.ForegroundColor = ConsoleColor.White;
-            }
+                PrintLine("Attempted position move but position was unreachable.", ConsoleColor.Red);
+            
             Console.WriteLine($"{StepsInRecording} steps in recording - Press P to play back.");
+            if (StepWasNotFound)
+            {
+                PrintLine("Step specified was not found", ConsoleColor.Red);
+                StepWasNotFound = false;
+            }
 
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine(" ======================= ");
-            Console.WriteLine();
-            Console.WriteLine("Controls");
+
+            PrintLine("Controls", ConsoleColor.Yellow);
             Console.WriteLine("Arrows move arm in XY plane, +- moves in Z.");    
             Console.WriteLine("WASD for servo control.");    
             Console.WriteLine("Space bar adds step to recording. P plays back recording. DEL clears recording.");    
+            
         }
     }
 }

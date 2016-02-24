@@ -8,5 +8,6 @@ namespace ArmControl
         void TargetPositionUnreachable();
         void ServoPositionChanged(int servoIndex, int position);
         void NumberOfStepsInRecordingChanged(int numberOfSteps);
+        void StepSpecifiedNotFound();
     }
 }

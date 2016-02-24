@@ -179,6 +179,9 @@ namespace ArmControlTests
             Manipulator.SetServoPosition(1, 67);
             Manipulator.RecordStep();
 
+            Manipulator.SetServoPosition(0, 0);
+            Manipulator.SetServoPosition(1, 0);
+
             MockController.Reset();
             Manipulator.PlayBackSteps();
 
@@ -204,10 +207,12 @@ namespace ArmControlTests
         public void DoesNotSendServoPositionsWhenTheyHaveNotChangedSinceTheLastStepInPlayback()
         {
             Manipulator.SetServoPosition(1, 67);
+            Manipulator.RecordStep();
+            Manipulator.RecordStep();
+
+            Manipulator.SetServoPosition(1, 123);
             MockController.Reset();
 
-            Manipulator.RecordStep();
-            Manipulator.RecordStep();
 
             Manipulator.PlayBackSteps();
             MockController.Verify(c => c.SetServoPosition(1, 67), Times.Once);
@@ -221,6 +226,30 @@ namespace ArmControlTests
             Manipulator.PlayBackSteps();
             AssertNoPositionWasSet();
             MockPresenter.Verify(r => r.NumberOfStepsInRecordingChanged(0));
+        }
+
+        [Fact]
+        public void CanPlayBackSpecificStepInRecording()
+        {
+            Manipulator.SetPosition(2, 4, 6);
+            Manipulator.RecordStep();
+            Manipulator.SetPosition(4, 6, 8);
+            Manipulator.RecordStep();
+            Manipulator.SetPosition(6, 7, 9);
+
+            MockController.Reset();
+            Manipulator.PlayBackStep(1);
+
+            AssertPositionWasSetTo(4, 6, 8);
+        }
+
+        [Fact]
+        public void WhenTheStepRequestedToPlayBackWasNotFoundItFiresThePresenter()
+        {
+            Manipulator.RecordStep();
+            Manipulator.PlayBackStep(10);
+
+            MockPresenter.Verify(r => r.StepSpecifiedNotFound());
         }
 
         [Fact]
