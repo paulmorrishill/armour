@@ -48,11 +48,7 @@ The switch mounting block can be 3D printed from the stl file in dobot/HomeSwitc
 To run this project you'll need visual studio. Set the start up project to "ConsoleArmControl". That is the main entry point at this stage.
 Currently set up with
 
-- Up/left/right/down arrows controlling X/Y coordinates.
-- +/- controlling Z coordinate.
-- WASD controlling the 2 servo positions.
-- H to home.
-- Shift makes every move in small increments
+![app](documentation/screenshot.png)
 
 When adding to the project where possible develop with TDD.
 
