@@ -93,7 +93,7 @@ namespace ArmControlTests
         {
             Manipulator.HomeArm();
             MockController.Verify(r => r.HomeArm());
-            AssertPositionIs(0.061, 0.0, 0.1);
+            AssertPositionIs(0.0, 0.07, 0.1);
         }
 
         [Fact]
@@ -321,6 +321,13 @@ namespace ArmControlTests
 
             AssertPositionIs(120, 0, 40);
             MockPresenter.Verify(r => r.NumberOfStepsInRecordingChanged(1));
+        }
+
+        [Fact]
+        public void CanDwell()
+        {
+            Manipulator.Dwell();
+            MockController.Verify(r => r.Dwell(1000));
         }
 
         private void AssertPositionIs(double x, double y, double z)

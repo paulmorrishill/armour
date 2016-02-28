@@ -43,28 +43,20 @@
   <ItemGroup>
     <Compile Include="ArmController.cs" />
     <Compile Include="ArmPresenter.cs" />
-    <Compile Include="CommandSets\Command.cs" />
-    <Compile Include="CommandSets\CommandSet.cs" />
     <Compile Include="ArmManipulator.cs" />
     <Compile Include="Kinematics\HillClimbingInverseKinematicsCalculator.cs" />
     <Compile Include="Kinematics\KinematicChain.cs" />
     <Compile Include="Kinematics\KinematicChainBase.cs" />
     <Compile Include="Kinematics\Dobot\DobotDhKinematicChain.cs" />
-    <Compile Include="Kinematics\ForwardKinematicsCalculator.cs" />
     <Compile Include="Kinematics\DhParameterSet.cs" />
     <Compile Include="Kinematics\InverseKinematicsCalculator.cs" />
     <Compile Include="Kinematics\JointType.cs" />
     <Compile Include="Kinematics\Matrix4D.cs" />
     <Compile Include="Kinematics\UnreachablePositionException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings\HardwareSettings.cs" />
-    <Compile Include="Settings\SetHardwareSettings.cs" />
-    <Compile Include="Settings\SetHardwareSettingsCompleteHandler.cs" />
     <Compile Include="Kinematics\Vector3D.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ArmManipulation\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -32,9 +32,17 @@ Also put a jumper across the middle and inner pins next to the servo connectors 
 ###Endstops
 For some reason the people who made the Dobot decided not to implement any kind of end stop on the arm. I assume they intended to use the 2 axis angle sensors that are mounted on each segment. I couldn't find any code that would allow me to hook into these sensors so I opted for the simple route and put some physical end stops in. I'm also not sure how they intended to get over the gyroscope drift issue.
 
+#Y and Z
 ![end-stops](documentation/end-stop-block.jpg)
 
 The switch mounting block can be 3D printed from the stl file in dobot/HomeSwitchBlock.stl.
+
+#X axis
+The X is mounted to the bottom plate and uses a small roller wheel micro switch. The mount can be 3D printed from dobot/ArmXEndStop.stl
+
+![end-stops](documentation/x-end-stop.jpg)
+
+This mounting reduces the range of the X axis to about 250&deg; but it's worth it for a usable X end stop.
 
 ##Configuring the repetier firmware
 - Download the [Arduino](https://www.arduino.cc/) IDE if you don't already have it.

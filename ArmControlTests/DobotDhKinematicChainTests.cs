@@ -17,7 +17,7 @@ namespace ArmControlTests
     private DobotDhKinematicChain ArmChain;
     private const int SafeZPosition = -40;
     private const int VerticalYPosition = 90;
-    private const int YHomePosition = 104;
+    private const int YHomePosition = 99;
     public DobotDhKinematicChainTests()
     {
       ArmChain = new DobotDhKinematicChain();
@@ -122,8 +122,8 @@ namespace ArmControlTests
     [Fact]
     public void DoesNotAllowYAxisPast105Degrees()
     {
-      AssertPositionValidity(0, 105, SafeZPosition, true); //After 45 degrees moving the Y makes no difference to the Z
-      AssertPositionValidity(0, 106, SafeZPosition, false);
+      AssertPositionValidity(0, 99, SafeZPosition, true); //After 45 degrees moving the Y makes no difference to the Z
+      AssertPositionValidity(0, 100, SafeZPosition, false);
     }
 
     //      / <-- Too far up
@@ -215,6 +215,15 @@ namespace ArmControlTests
       AssertPositionValidity(0, 40, 11, false);
       AssertPositionValidity(0, 30, 19, false);  
     }
+
+      [Fact]
+      public void DoesNotAllowXOutsideOf0And250()
+      {
+            AssertPositionValidity(0, 40, 9, true);
+            AssertPositionValidity(250, 40, 9, true);
+            AssertPositionValidity(-1, 40, 9, false);
+            AssertPositionValidity(251, 40, 9, false);
+        }
 
     private void AssertPositionValidity(double x, double y, double z, bool isValid, string message = "")
     {

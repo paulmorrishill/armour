@@ -107,7 +107,7 @@ namespace ArmControl
 
         public void HomeArm()
         {
-            CurrentPosition = new Vector3D(0.061, 0.0, 0.1);
+            CurrentPosition = new Vector3D(0, 0.07, 0.1);
             ArmController.HomeArm();
             SetArmToCurrentPosition();
         }
@@ -227,6 +227,11 @@ namespace ArmControl
         public void NumberOfStepsChanged()
         {
             Presenter.NumberOfStepsInRecordingChanged(Recording.Count);
+        }
+
+        public void Dwell()
+        {
+            ArmController.Dwell(1000);
         }
     }
 }

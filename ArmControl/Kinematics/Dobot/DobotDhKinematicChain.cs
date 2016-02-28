@@ -36,8 +36,8 @@ namespace ArmControl.Kinematics.Dobot
       var y = links[1].Theta;
       var z = links[2].Theta;
 
-      var xValid = x > -180 && x < 180;
-      var yValid = y <= 105 && y >= -20;
+      var xValid = x >= 0 && x <= 250;
+      var yValid = y <= 99 && y >= -20;
       //The range of the Z axis on the dotot increases with every degree of the x
       var extraZDueToY = Math.Max(90 - y, 0);
       extraZDueToY = Math.Min(extraZDueToY, 45); //Capped out at 45 degrees extra
@@ -50,7 +50,7 @@ namespace ArmControl.Kinematics.Dobot
 
     public override void Randomize()
     {
-      var x = Random.Next(-180, 180);
+      var x = Random.Next(0, 250);
       var y = Random.Next(-10, 100);
       var z = Random.Next(-60, 80);
       InputLinks[0].SetTheta(x);
