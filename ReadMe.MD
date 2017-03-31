@@ -1,13 +1,13 @@
 #Armour - open source robotic arm control software.
-This project was designed to be a replacement for the useless software provided with the Dobot robotic arm, but should work well with any robotic arm that can be modelled using Denavit-Hartenberg parameters.
-This is in a very, very early stage, and is only a console app at the moment, allowing control of the arm through the keyboard.
+This project was designed to be a replacement for the software provided with the Dobot robotic arm, but should work well with any robotic arm that can be modelled using Denavit-Hartenberg parameters.
+This is in a early stage, and is a console app at the moment, allowing control of the arm through the keyboard.
 
 #Firmware
 The current implementation uses G-Codes as the protocol for arm control and assumes that your arm is set up for one degree per mm.
-I use the repetier firmware which works pretty well but any 3D printer firmware should work.
+I use the repetier firmware which works pretty well, and any 3D printer firmware should work.
 
 #Host software
-Obviously this software is the host software but it's not the greatest tool to use to test your connections and pin assignments. For that I use the [repetier host](http://www.repetier.com/download-now/).
+this software is the host software but it cannot test your connections and pin assignments. Therefore, I use the [repetier host](http://www.repetier.com/download-now/).
 
 #Dobot
 The dobot is configured with the three axes laid out in the following arangement.
@@ -21,7 +21,7 @@ Here is a picture of the RAMPS board wired up to the Dobot outputs.
 
 ![ramps wiring](documentation/ramps-wiring.jpg)
 
-To wire up the arm start by putting 3 jumpers across all 3 microstepping switches beneath each controller - this will set controllers to 16 times microstepping.
+To wire up the arm start by putting 3 jumpers across all 3 microstepping switches beneath each controller(sentence fragament,missing verb) - this will set controllers to 16 times microstepping.
 
 Then put the A4988 stepper drivers into the slots shown in the image and connect the stepper cables.
 
@@ -30,8 +30,7 @@ You'll need a 12V power supply for the RAMPS board, connected to the green conne
 Also put a jumper across the middle and inner pins next to the servo connectors to power join the VCC to the servo VCC.
 
 ###Endstops
-For some reason the people who made the Dobot decided not to implement any kind of end stop on the arm. I assume they intended to use the 2 axis angle sensors that are mounted on each segment. I couldn't find any code that would allow me to hook into these sensors so I opted for the simple route and put some physical end stops in. I'm also not sure how they intended to get over the gyroscope drift issue.
-
+People may not want to implement any kinds of end stop on the arm. I assume they intended to use the 2 axis angle sensors that are mounted on each segment. I didn't find any code that would allow me to hook into these sensors so I opted for the simple route and put some physical end stops in.
 ####Y and Z
 ![end-stops](documentation/end-stop-block.jpg)
 
