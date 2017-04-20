@@ -1,20 +1,20 @@
-#Armour - open source robotic arm control software.
+# Armour - open source robotic arm control software.
 This project was designed to be a replacement for the useless software provided with the Dobot robotic arm, but should work well with any robotic arm that can be modelled using Denavit-Hartenberg parameters.
 This is in a very, very early stage, and is only a console app at the moment, allowing control of the arm through the keyboard.
 
-#Firmware
+# Firmware
 The current implementation uses G-Codes as the protocol for arm control and assumes that your arm is set up for one degree per mm.
 I use the repetier firmware which works pretty well but any 3D printer firmware should work.
 
-#Host software
+# Host software
 Obviously this software is the host software but it's not the greatest tool to use to test your connections and pin assignments. For that I use the [repetier host](http://www.repetier.com/download-now/).
 
-#Dobot
+# Dobot
 The dobot is configured with the three axes laid out in the following arangement.
 
 ![axis labeling](documentation/axis-labeling-with-angles.png)
 
-##Wiring the Dobot with RAMPS
+## Wiring the Dobot with RAMPS
 I'd recommend using the RAMPS 1.4 driver board as it provides outputs for all functions relating to the arm.
 
 Here is a picture of the RAMPS board wired up to the Dobot outputs.
@@ -29,22 +29,22 @@ You'll need a 12V power supply for the RAMPS board, connected to the green conne
 
 Also put a jumper across the middle and inner pins next to the servo connectors to power join the VCC to the servo VCC.
 
-###Endstops
+### Endstops
 For some reason the people who made the Dobot decided not to implement any kind of end stop on the arm. I assume they intended to use the 2 axis angle sensors that are mounted on each segment. I couldn't find any code that would allow me to hook into these sensors so I opted for the simple route and put some physical end stops in. I'm also not sure how they intended to get over the gyroscope drift issue.
 
-####Y and Z
+#### Y and Z
 ![end-stops](documentation/end-stop-block.jpg)
 
 The switch mounting block can be 3D printed from the stl file in dobot/HomeSwitchBlock.stl.
 
-####X axis
+#### X axis
 The X is mounted to the bottom plate and uses a small roller wheel micro switch. The mount can be 3D printed from dobot/ArmXEndStop.stl
 
 ![end-stops](documentation/x-end-stop.jpg)
 
 This mounting reduces the range of the X axis to about 250&deg; but it's worth it for a usable X end stop.
 
-##Configuring the repetier firmware
+## Configuring the repetier firmware
 - Download the [Arduino](https://www.arduino.cc/) IDE if you don't already have it.
 - Download the latest version of the [repetier firmware](http://www.repetier.com/documentation/repetier-firmware/).
 - Open Repetier/Repetier.ino in Arduino
